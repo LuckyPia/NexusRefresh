@@ -22,7 +22,7 @@ pod 'NexusRefresh'
 
 ## Author
 
-LuckyPia, 664454335@qq.com
+664454335@qq.com
 
 ## License
 
