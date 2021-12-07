@@ -40,6 +40,8 @@ public class NexusRefreshManager {
                     }
                 }).disposed(by: vc.rx.disposeBag)
             }
+        }else {
+            fatalError("AnyObject must implement NexusRefreshDelegate protocol!")
         }
     }
 
