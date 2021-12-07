@@ -93,3 +93,31 @@ class NexusRefreshObject {
         self.data = data
     }
 }
+
+// MARK: UIViewController扩展 - NexusRefreshDelegate默认实现
+
+extension UIViewController: NexusRefreshDelegate {
+    open func nexusTags() -> Set<String> {
+        return [defaultNexusTag]
+    }
+    
+    open func nexusRefresh(data: Any?) {
+        // 刷新
+    }
+}
+
+// MARK: NSObject扩展 - 获取默认标签
+
+public extension NSObject {
+    /// 默认标签
+    var defaultNexusTag: String {
+        // 返回当前类的名称
+        return String(describing: type(of: self))
+    }
+    
+    /// 静态获取默认标签
+    static var defaultNexusTag: String {
+        // 返回当前类的名称
+        return "\(self)".components(separatedBy: ".").first!
+    }
+}

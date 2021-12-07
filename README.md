@@ -36,13 +36,17 @@ class BaseViewController: UIViewController {
 2. 在具体的ViewController中，实现刷新协议
 
 ```swift
-extension DemoViewController: NexusRefreshDelegate {
-    func nexusTags() -> Set<String> {
+class DemoViewController: BaseViewController {
+
+    // 省略其他代码...
+
+    override func nexusTags() -> Set<String> {
         // 刷新的标签列表，标签会作为刷新标识
-        return ["home"]
+        // super.nexusTags().union(["demo"])
+        return super.nexusTags()
     }
     
-    func nexusRefresh(data: Any?) {
+    override func nexusRefresh(data: Any?) {
         // 页面出现时的刷新方法，可以传递数据
         self.loadData()
     }
@@ -55,7 +59,7 @@ extension DemoViewController: NexusRefreshDelegate {
 
 ```swift
 // 标签列表中的都会被刷新
-NexusRefreshManager.refresh(tags: ["home"])
+NexusRefreshManager.refresh(tags: [DemoViewController.defaultNexusTag])
 
 /// 刷新方法详情
 /// - Parameters:
@@ -78,6 +82,10 @@ static func refresh(tags: Set<String>, data: Any? = nil, filtObjects: [AnyObject
    实现NexusRefreshDelegate的**非UIViewController**，直接刷新。
    
 ## 更新日志
+### 1.0.2
+1. UIViewController增加NexusRefreshDelegate默认实现
+
+
 ### 1.0.1
 1. 增加错误提示
 2. 更新文档

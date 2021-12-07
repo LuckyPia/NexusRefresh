@@ -7,17 +7,22 @@
 //
 
 import UIKit
+import NexusRefresh
 
-class ViewController: UIViewController {
+class ViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = .white
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            NexusRefreshManager.refresh(tags: [ViewController.defaultNexusTag])
+        }
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func nexusRefresh(data: Any?) {
+        print("ViewController nexusRefreshed!")
     }
 
 }
