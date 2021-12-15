@@ -58,6 +58,9 @@ NexusRefreshManager.refresh(tags: ["ViewController", "TestVC"])
    不可以，会以最后一次添加为准
    
 ## 更新日志
+### 2.0.1
+1. 单例支持
+
 ### 2.0.0
 1. 重构刷新管理器
 

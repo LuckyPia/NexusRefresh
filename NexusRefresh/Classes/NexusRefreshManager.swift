@@ -30,7 +30,7 @@ public class NexusRefreshManager {
     ///   - observer: 刷新目标
     ///   - tags: 标签列表
     ///   - refreshBlock: 刷新回调
-    public static func add(_ observer: AnyObject, tags: Set<String>, refreshBlock: @escaping (_ data: Any?) -> Void) {
+    public func add(_ observer: AnyObject, tags: Set<String>, refreshBlock: @escaping (_ data: Any?) -> Void) {
         let observerModel = NexusRefreshObserverModel(observer: observer, tags: tags, refreshBlock: refreshBlock)
         NexusRefreshManager.shared.availableRefreshPool.setObject(observerModel, forKey: observer)
         // 如果是VC进行特殊处理
@@ -60,7 +60,7 @@ public class NexusRefreshManager {
     ///   - data: 传递数据
     ///   - filtObjects: 过滤列表
     ///   - force: 强制刷新，会直接刷新，不会等待出现（仅对VC有用）
-    public static func refresh(tags: Set<String>, data: Any? = nil, filtObjects: [AnyObject] = [], force: Bool = false) {
+    public func refresh(tags: Set<String>, data: Any? = nil, filtObjects: [AnyObject] = [], force: Bool = false) {
         // 遍历可刷新池
         NexusRefreshManager.shared.availableRefreshPool.objectEnumerator()?.forEach { object in
             // 判断是否可以刷新
@@ -88,7 +88,7 @@ public class NexusRefreshManager {
     
     /// 移除监听
     /// - Parameter observer: 观察者
-    public static func remove(_ observer: AnyObject) {
+    public func remove(_ observer: AnyObject) {
         NexusRefreshManager.shared.availableRefreshPool.removeObject(forKey: observer)
         NexusRefreshManager.shared.waitRefreshPool.removeObject(forKey: observer)
     }
