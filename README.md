@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 将自己加入可刷新池
-        NexusRefreshManager.add(self, tags: ["ViewController"]) { data in
+        NexusRefreshManager.shared.add(self, tags: ["ViewController"]) { data in
             print("ViewController 刷新了")
         }
     }
@@ -38,7 +38,7 @@ class BaseViewController: UIViewController {
 2. 刷新
 
 ```swift
-NexusRefreshManager.refresh(tags: ["ViewController", "TestVC"])
+NexusRefreshManager.shared.refresh(tags: ["ViewController", "TestVC"])
 ```
 
 ## Q&A
@@ -58,6 +58,9 @@ NexusRefreshManager.refresh(tags: ["ViewController", "TestVC"])
    不可以，会以最后一次添加为准
    
 ## 更新日志
+### 2.0.2
+1. 代码完善
+
 ### 2.0.1
 1. 单例支持
 

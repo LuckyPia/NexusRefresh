@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         
         makeUI()
         
-        NexusRefreshManager.add(self, tags: ["ViewController"]) { data in
+        NexusRefreshManager.shared.add(self, tags: ["ViewController"]) { data in
             print("ViewController 刷新了")
         }
         

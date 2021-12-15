@@ -29,7 +29,7 @@ class TestVC: UIViewController {
         
         makeUI()
         
-        NexusRefreshManager.add(self, tags: ["TestVC"]) { data in
+        NexusRefreshManager.shared.add(self, tags: ["TestVC"]) { data in
             print("TestVC 刷新了")
         }
     }
@@ -45,6 +45,6 @@ class TestVC: UIViewController {
     }
     
     @objc func refresh() {
-        NexusRefreshManager.refresh(tags: ["ViewController", "TestVC"])
+        NexusRefreshManager.shared.refresh(tags: ["ViewController", "TestVC"])
     }
 }
