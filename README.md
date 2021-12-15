@@ -21,70 +21,48 @@ pod 'NexusRefresh'
 
 ## 使用
 
-1. 在BaseViewController中将自己添加到刷新池
+1. 添加刷新监听
 
 ```swift
 class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 将自己加入可刷新池，不添加到刷新池将无法刷新
-        NexusRefreshManager.add(self)
+        // 将自己加入可刷新池
+        NexusRefreshManager.add(self, tags: ["ViewController"]) { data in
+            print("ViewController 刷新了")
+        }
     }
 }
 ```
 
-2. 在具体的ViewController中，实现刷新协议
+2. 刷新
 
 ```swift
-class DemoViewController: BaseViewController {
-
-    // 省略其他代码...
-
-    override func nexusTags() -> Set<String> {
-        // 刷新的标签列表，标签会作为刷新标识
-        // super.nexusTags().union(["demo"])
-        return super.nexusTags()
-    }
-    
-    override func nexusRefresh(data: Any?) {
-        // 页面出现时的刷新方法，可以传递数据
-        self.loadData()
-    }
-    
-}
-
-```
-
-3. 通知出现时刷新
-
-```swift
-// 标签列表中的都会被刷新
-NexusRefreshManager.refresh(tags: [DemoViewController.defaultNexusTag])
-
-/// 刷新方法详情
-/// - Parameters:
-///   - tags: 标签列表
-///   - data: 传递数据
-///   - filtObjects: 过滤列表
-static func refresh(tags: Set<String>, data: Any? = nil, filtObjects: [AnyObject] = [])
+NexusRefreshManager.refresh(tags: ["ViewController", "TestVC"])
 ```
 
 ## Q&A
 
 1. 可以刷新除UIViewController以外的对象么？
 
-   可以，只要对象实现NexusRefreshDelegate代理协议，并且加入到可刷新池中NexusRefreshManager.add(self)，但是他们会在通知刷新时刷新，而不是出现时刷新
+   可以，但是他们会在通知刷新时刷新，而不是出现时刷新
 
 2. 什么时候刷新？
 
-   实现NexusRefreshDelegate的**UIViewController**, 若**不在顶层，出现时刷新**，**在顶层，直接刷新**。
+   **UIViewController**若**不在顶层，出现时刷新**，**在顶层，直接刷新**。
 
-   实现NexusRefreshDelegate的**非UIViewController**，直接刷新。
+   **非UIViewController**直接刷新。
+   
+3. 同一个对象可以添加多次吗？
+
+   不可以，会以最后一次添加为准
    
 ## 更新日志
+### 2.0.0
+1. 重构刷新管理器
+
 ### 1.0.2
 1. UIViewController增加NexusRefreshDelegate默认实现
-
 
 ### 1.0.1
 1. 增加错误提示

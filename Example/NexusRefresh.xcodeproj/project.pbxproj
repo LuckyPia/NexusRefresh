@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		189D607D275F0E4C006501D7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D607C275F0E4C006501D7 /* BaseViewController.swift */; };
+		189D607D275F0E4C006501D7 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D607C275F0E4C006501D7 /* TestVC.swift */; };
 		29D011E3FE1AD0DC128F0ED5 /* Pods_NexusRefresh_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9DFDC7EC10B84F7A50A520 /* Pods_NexusRefresh_Tests.framework */; };
 		604463DD2A7F92AAA3895BBB /* Pods_NexusRefresh_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FB272D2B3C25CC7FDC7F0D /* Pods_NexusRefresh_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -30,7 +30,7 @@
 
 /* Begin PBXFileReference section */
 		0D0BE1D27C5148FF95F42FDE /* Pods-NexusRefresh_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NexusRefresh_Example.debug.xcconfig"; path = "Target Support Files/Pods-NexusRefresh_Example/Pods-NexusRefresh_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		189D607C275F0E4C006501D7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		189D607C275F0E4C006501D7 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		1B9DFDC7EC10B84F7A50A520 /* Pods_NexusRefresh_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NexusRefresh_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FB272D2B3C25CC7FDC7F0D /* Pods_NexusRefresh_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NexusRefresh_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* NexusRefresh_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NexusRefresh_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				189D607C275F0E4C006501D7 /* BaseViewController.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				189D607C275F0E4C006501D7 /* TestVC.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -279,6 +279,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxViewController/RxViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -288,6 +289,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -347,7 +349,7 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				189D607D275F0E4C006501D7 /* BaseViewController.swift in Sources */,
+				189D607D275F0E4C006501D7 /* TestVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

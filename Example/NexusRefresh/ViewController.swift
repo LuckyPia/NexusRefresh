@@ -8,21 +8,44 @@
 
 import UIKit
 import NexusRefresh
+import SnapKit
 
-class ViewController: BaseViewController {
+class ViewController: UIViewController {
+    
+    lazy var toTestVCBtn: UIButton = {
+        let btn = UIButton()
+        btn.backgroundColor = .white
+        btn.layer.borderColor = UIColor.black.cgColor
+        btn.layer.cornerRadius = 4
+        btn.layer.borderWidth = 1
+        btn.setTitle("前往测试页面", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.addTarget(self, action: #selector(toTestVC), for: .touchUpInside)
+        return btn
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            NexusRefreshManager.refresh(tags: [ViewController.defaultNexusTag])
+        makeUI()
+        
+        NexusRefreshManager.add(self, tags: ["ViewController"]) { data in
+            print("ViewController 刷新了")
         }
         
     }
     
-    override func nexusRefresh(data: Any?) {
-        print("ViewController nexusRefreshed!")
+    func makeUI() {
+        
+        view.backgroundColor = .white
+        view.addSubview(toTestVCBtn)
+        toTestVCBtn.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+    }
+    
+    @objc func toTestVC() {
+        self.navigationController?.pushViewController(TestVC(), animated: true)
     }
 
 }
