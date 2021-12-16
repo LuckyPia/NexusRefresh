@@ -113,7 +113,7 @@ class NexusRefreshObserverModel {
     }
 }
 
-// MARK: 纽带刷新等待数据模型
+// MARK: 纽带刷新数据模型
 
 class NexusRefreshObject {
     /// 标签列表

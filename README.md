@@ -53,6 +53,12 @@ NexusRefreshManager.shared.refresh(tags: ["ViewController", "TestVC"])
 
    不可以，会以最后一次添加为准
    
+4. 和`NotificationCenter`异同
+   - `NotificationCenter`在一个对象中可以有多个观察者，`NexusRefreshManager`在一个对象中仅支持一个观察者。
+   - `NotificationCenter`观察一个`NotificationName`，`NexusRefreshManager`可以观察多个`tag`。
+   - `NotificationCenter`发送通知观察者立刻收到，`NexusRefreshManager`如果不是强制刷新，未展示的`UIViewController`会在`viewDidAppear`时收到，且只会收到**最后一次的通知**。
+   - `NotificationCenter`可以接受数据，`NexusRefreshManager`也可以接受数据。
+   
 ## 更新日志
 ### 2.0.2
 1. 代码完善
