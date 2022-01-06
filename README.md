@@ -24,7 +24,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 将自己加入可刷新池
-        NexusRefreshManager.shared.add(self, tags: ["ViewController"]) { data in
+        NexusRefreshManager.shared.add(self, tags: ["ViewController"]) { object in
             print("ViewController 刷新了")
         }
     }
@@ -60,6 +60,12 @@ NexusRefreshManager.shared.refresh(tags: ["ViewController", "TestVC"])
    - `NotificationCenter`可以接受数据，`NexusRefreshManager`也可以接受数据。
    
 ## 更新日志
+### 2.0.4
+1. 降低RxSwift版本
+
+### 2.0.3
+1. 优化代码
+
 ### 2.0.2
 1. 代码完善
 

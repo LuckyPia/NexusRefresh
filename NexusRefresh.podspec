@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NexusRefresh'
-  s.version          = '2.0.3'
+  s.version          = '2.0.4'
   s.summary          = 'iOS多页面数据同步刷新'
 
 # This description is used to generate tags and improve search results.
