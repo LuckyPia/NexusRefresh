@@ -31,6 +31,6 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'NexusRefresh/Classes/**/*'
   
-  s.dependency 'RxSwift', '~> 6.2'
-  s.dependency "RxCocoa", "~> 6.2"
+  s.dependency 'RxSwift', '~> 5.0'
+  s.dependency "RxCocoa", "~> 5.0"
 end
