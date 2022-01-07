@@ -21,7 +21,7 @@ public class NexusRefreshManager {
     private var availableRefreshPool = NSMapTable<AnyObject, Observer>(keyOptions: .weakMemory, valueOptions: .strongMemory)
 
     /// 等待刷新池
-    private var waitRefreshPool = NSMapTable<AnyObject, Object>(keyOptions: .weakMemory, valueOptions: .strongMemory)
+    private var waitRefreshPool = NSHashTable<AnyObject>.init(options: .weakMemory)
 
     // MARK: 添加刷新监听
 
@@ -30,23 +30,23 @@ public class NexusRefreshManager {
     ///   - target: 刷新目标
     ///   - tags: 标签列表
     ///   - refreshBlock: 刷新回调
-    public func add(_ target: AnyObject, tags: Set<Tag>, refreshBlock: @escaping (_ object: Object) -> Void) {
+    public func add(_ target: AnyObject, tags: Set<Tag>, refreshBlock: @escaping () -> Void) {
         let observerModel = Observer(target: target, tags: tags, refreshBlock: refreshBlock)
         NexusRefreshManager.shared.availableRefreshPool.setObject(observerModel, forKey: target)
         // 如果是VC进行特殊处理
         if let vc = target as? UIViewController {
             // VC出现时再刷新
             vc.rx.nr_viewDidAppear.subscribe(onNext: { [weak target] _ in
-                guard let observer = target else { return }
+                guard let target = target else { return }
                 // 判断刷新池是否存在
-
-                if let refreshObject = NexusRefreshManager.shared.waitRefreshPool.object(forKey: observer),
-                   let observerModel = NexusRefreshManager.shared.availableRefreshPool.object(forKey: observer)
+                
+                if NexusRefreshManager.shared.waitRefreshPool.contains(target),
+                   let observerModel = NexusRefreshManager.shared.availableRefreshPool.object(forKey: target)
                 {
                     // 刷新
-                    observerModel.refreshBlock(refreshObject)
+                    observerModel.refreshBlock()
                     // 移除等待刷新池
-                    NexusRefreshManager.shared.waitRefreshPool.removeObject(forKey: observer)
+                    NexusRefreshManager.shared.waitRefreshPool.remove(observerModel.target)
                 }
             }).disposed(by: vc.rx.nr_disposeBag)
         }
@@ -57,10 +57,9 @@ public class NexusRefreshManager {
     /// 刷新
     /// - Parameters:
     ///   - tags: 标签列表
-    ///   - data: 传递数据
     ///   - filtObjects: 过滤列表
     ///   - force: 强制刷新，会直接刷新，不会等待出现（仅对VC有用）
-    public func refresh(tags: Set<Tag>, data: Any? = nil, filtObjects: [AnyObject] = [], force: Bool = false) {
+    public func refresh(tags: Set<Tag>, filtObjects: [AnyObject] = [], force: Bool = false) {
         // 遍历可刷新池
         NexusRefreshManager.shared.availableRefreshPool.objectEnumerator()?.forEach { object in
             // 判断是否可以刷新
@@ -68,17 +67,16 @@ public class NexusRefreshManager {
                tags.intersection(observerModel.tags).count > 0,
                !filtObjects.contains(where: { $0.isEqual(observerModel) })
             {
-                let refreshObject = Object(tags: tags, data: data)
                 if !force, let vc = observerModel.target as? UIViewController {
                     // 不可见VC加入等待刷新池；可见VC直接刷新。
                     if vc.isViewLoaded, vc.view.window != nil {
-                        observerModel.refreshBlock(refreshObject)
+                        observerModel.refreshBlock()
                     } else {
-                        NexusRefreshManager.shared.waitRefreshPool.setObject(refreshObject, forKey: observerModel.target)
+                        NexusRefreshManager.shared.waitRefreshPool.add(observerModel.target)
                     }
                 } else {
                     // 不是VC直接刷新
-                    observerModel.refreshBlock(refreshObject)
+                    observerModel.refreshBlock()
                 }
             }
         }
@@ -87,10 +85,10 @@ public class NexusRefreshManager {
     // MARK: 移除监听
     
     /// 移除监听
-    /// - Parameter observer: 观察者
-    public func remove(_ observer: AnyObject) {
-        NexusRefreshManager.shared.availableRefreshPool.removeObject(forKey: observer)
-        NexusRefreshManager.shared.waitRefreshPool.removeObject(forKey: observer)
+    /// - Parameter target: 观察者
+    public func remove(_ target: AnyObject) {
+        NexusRefreshManager.shared.availableRefreshPool.removeObject(forKey: target)
+        NexusRefreshManager.shared.waitRefreshPool.remove(target)
     }
     
 }
@@ -121,9 +119,9 @@ extension NexusRefreshManager {
         var tags: Set<Tag> = []
 
         /// 刷新回调
-        var refreshBlock: (Object) -> Void
+        var refreshBlock: () -> Void
 
-        init(target: AnyObject, tags: Set<Tag>, refreshBlock: @escaping (Object) -> Void) {
+        init(target: AnyObject, tags: Set<Tag>, refreshBlock: @escaping () -> Void) {
             self.target = target
             self.tags = tags
             self.refreshBlock = refreshBlock

@@ -35,8 +35,7 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // 将自己加入可刷新池
-    NexusRefreshManager.shared.add(self, tags: [.Home]) { object in
-        // "tags: \(object.tags), data: \(object.data)"
+    NexusRefreshManager.shared.add(self, tags: [.Home]) {
         print("HomeViewController 刷新了")
     }
   }
@@ -51,10 +50,9 @@ NexusRefreshManager.shared.refresh(tags: [.Home])
 /// 刷新方法详情
 /// - Parameters:
 ///  - tags: 标签列表
-///  - data: 传递数据
 ///  - filtObjects: 过滤列表
 ///  - force: 强制刷新，会直接刷新，不会等待出现（仅对VC有用）
-public func refresh(tags: Set<Tag>, data: Any? = nil, filtObjects: [AnyObject] = [], force: Bool = false)
+public func refresh(tags: Set<Tag>, filtObjects: [AnyObject] = [], force: Bool = false)
 ```
 
 ## Q&A
@@ -84,6 +82,9 @@ public func refresh(tags: Set<Tag>, data: Any? = nil, filtObjects: [AnyObject] =
 
    
 ## 更新日志
+### 2.0.5
+1. 移除刷新时发送数据
+
 ### 2.0.4
 1. 降低RxSwift版本
 
